@@ -1,0 +1,5 @@
+[
+    "ID: 2 - Empresa AAA - Pais: Mexico ",
+    "ID: 3 - Empresa CMLL - Pais: Mexico ",
+    "ID: 4 - Empresa NXT - Pais: Estados Unidos "
+]
