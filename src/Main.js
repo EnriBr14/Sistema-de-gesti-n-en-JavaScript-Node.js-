@@ -1,6 +1,7 @@
 const Luchador = require("./Luchador")
 const Empresa = require("./Empresa")
 const Servicio = require ("./Servicio")
+const {motrarDatos, luchadorPorEmpresa, eliminarDatos} = require("./Servicio");
 //Empresas------------------------------------------------------------------------------------
 const em1 = new Empresa({
     idEmpresa:1,
@@ -227,5 +228,9 @@ const em5 = new Empresa(5, "NXT", "Estados Unidos", []);
 
 
 //Servicio.luchadorPorEmpresa("CMLL")
-Servicio.eliminarDatos("WWE", true)
+//Servicio.eliminarDatos("WWE", true)
 //Servicio.motrarDatos(1)
+
+
+console.log("Callback----------------------------")
+Servicio.peticion(motrarDatos, 1)

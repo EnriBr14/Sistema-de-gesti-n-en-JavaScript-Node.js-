@@ -165,7 +165,9 @@ function eliminarDatos(empresaORluchador, confirm){
     }
 }
 
-
+function peticion(callback, parametro){
+    callback(parametro);
+}
 
 
 
@@ -174,5 +176,6 @@ module.exports = {
     guardarDatos,
     motrarDatos,
     luchadorPorEmpresa,
-    eliminarDatos
+    eliminarDatos,
+    peticion,
 }
