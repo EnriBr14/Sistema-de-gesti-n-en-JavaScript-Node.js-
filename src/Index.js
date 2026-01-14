@@ -243,7 +243,7 @@ Opcion 3 - Eliminar un registro en la lista con uso de la funcion eliminarDatos
 Servicio.eliminarDatos(Nombre de la empresa o luchador, true o false para confirmar)
 
 Ejemplo
-Servicio.eliminarDatos("WWE",true) -> Elimina a WWE y se puede verificar en el RegistroEmpresas.txt
+Servicio.eliminarDatos("WWE",true) -> Elimina a WWE y se puede verificar en el RegistroEmpresas.json
 */
 
 //Funciones para realizar las peticiones
