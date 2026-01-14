@@ -1,50 +1,55 @@
-const luchad = require("./Luchador")
-const luchador = require("./Empresa");
-const fs = require('fs')
+const luchad = require("../Models/Luchador")
+const luchador = require("../Models/Empresa")
+const fs = require('fs').promises;
 let luchadores = []
 let empresas = []
 
 
 //Crear una funcion para guardar
-function guardarDatos(datos){
-    //Verficar si se quiere guardar una empresa o un luchador-----------------------------
-    if(Object.keys(datos).length >= 3){
-        //Verificar que el luchador que se quiere guardar no exista en el array
-        //Verificar con el uso del metodo "some" si algun nombre se encuentra contenido en el array
-        let comparando = luchadores.some(luchador => luchador.getNombreLuchador() == datos.getNombreLuchador())
-        //Realizar el guardado si no se encuentra el nombre en el array
-        if(!comparando){
-            luchadores.push(datos)
+async function guardarDatos(datos){
+  try{
+      //Verficar si se quiere guardar una empresa o un luchador-----------------------------
+      if(Object.keys(datos).length >= 3){
+          //Verificar que el luchador que se quiere guardar no exista en el array
+          //Verificar con el uso del metodo "some" si algun nombre se encuentra contenido en el array
+          let comparando = luchadores.some(luchador => luchador.getNombreLuchador() == datos.getNombreLuchador())
+          //Realizar el guardado si no se encuentra el nombre en el array
+          if(!comparando){
+              luchadores.push(datos)
 
-            fs.writeFileSync('RegistroLuchadores.txt', JSON.stringify(luchadores, null, 2))
-        }else{
-            console.log(`
+              await fs.writeFile('RegistroLuchadores.txt', JSON.stringify(luchadores, null, 2))
+          }else{
+              console.log(`
             El luchador que quieres registrar ya esta existe
             Nombre: ${datos.getNombreLuchador()}
             Empresa: ${datos.empresaContrato}
             `)
-        }
-    }
-    //Guardado de empresa--------------------------------
-    else{
-        //Verificar que la empresa que se quiere guardar no exista en el array
-        let validacion = empresas.some(empresa => empresa.getNombreEmpresa() == datos.getNombreEmpresa())
-        if(!validacion){
-            empresas.push(datos)
+          }
+      }
+      //Guardado de empresa--------------------------------
+      else{
+          //Verificar que la empresa que se quiere guardar no exista en el array
+          let validacion = empresas.some(empresa => empresa.getNombreEmpresa() == datos.getNombreEmpresa())
+          if(!validacion){
+              empresas.push(datos)
 
-            fs.writeFileSync("RegistroEmpresas.txt", JSON.stringify(empresas, null, 2))
+              await fs.writeFile("RegistroEmpresas.txt", JSON.stringify(empresas, null, 2))
 
-        }else{
-            console.log(`
-            El luchador que quieres registrar ya esta existe
+          }else{
+              console.log(`
+            La empresa que quieres registrar ya esta existe
             Nombre: ${datos.getNombreEmpresa()}
             Empresa: ${datos.getPaisEmpresa()}
             `)
-        }
+          }
 
 
-    }
+      }
 
+
+  }catch(err){
+        console.log(err)
+  }
 }
 
 //----------------------------Mostrar valores segun la empresa----------------------------------------------------
@@ -62,8 +67,7 @@ function luchadorPorEmpresa(empresaNombre){
             luchadores.forEach(luchad => {
                 //Imprimir solo si el nombre de de las empresas es el mismo
                 if(luchad.empresaContrato == empresaNombre){
-                    console.log(`Nombre: ${luchad.getNombreLuchador()}`
-                    )
+                    console.log(`Nombre: ${luchad.getNombreLuchador()}`)
 
                 }
 
@@ -105,7 +109,8 @@ function motrarDatos(opcion){
 }
 
 
-function eliminarDatos(empresaORluchador, confirm){
+async function eliminarDatos(empresaORluchador, confirm){
+try{
     //Verificar si se requiere eliminar una empresa o un luchador
     //Buscar luchador
     if(empresaORluchador.length > 4){
@@ -125,11 +130,11 @@ function eliminarDatos(empresaORluchador, confirm){
             if(confirm){
 
 
-                setTimeout(function (){
+                setTimeout(async function (){
                     luchadores.splice(indexLuchador, 1)
                     console.log("Luchador eliminado")
                     motrarDatos(1)
-                    fs.writeFileSync('RegistroLuchadores.txt', JSON.stringify(luchadores, null, 4))
+                    await fs.writeFile('RegistroLuchadores.txt', JSON.stringify(luchadores, null, 4))
                 },1500)
 
 
@@ -155,14 +160,21 @@ function eliminarDatos(empresaORluchador, confirm){
                 let indexEmpresa = empresas.findIndex(empres => empres.getNombreEmpresa() === empresaEliminar)
                 empresas.splice(indexEmpresa, 1)
                 console.log("Empresa eliminada")
-                setTimeout(() =>{
-                    fs.writeFileSync('RegistroEmpresas.txt', JSON.stringify(empresas, null, 4))
+                setTimeout(async () => {
+                    await fs.writeFile('RegistroEmpresas.txt', JSON.stringify(empresas, null, 4))
                     motrarDatos(2)
                 },1500)
+            }else{
+                console.log("Eliminacion cancelada")
             }
 
+        }else{
+            console.log("Empresa no encontrada")
         }
     }
+}catch(err){
+    console.log(err)
+}
 }
 
 function peticion(callback, parametro){

@@ -1,7 +1,7 @@
-const Luchador = require("./Luchador")
-const Empresa = require("./Empresa")
-const Servicio = require ("./Servicio")
-const {motrarDatos, luchadorPorEmpresa, eliminarDatos} = require("./Servicio");
+const Luchador = require("./Models/Luchador")
+const Empresa = require("./Models/Empresa")
+const Servicio = require ("./Service/Servicio")
+const {motrarDatos, luchadorPorEmpresa, eliminarDatos} = require("./Service/Servicio");
 //Empresas------------------------------------------------------------------------------------
 const em1 = new Empresa({
     idEmpresa:1,
@@ -214,23 +214,40 @@ const l16 = new Luchador({
     youtube: "El Grande Americano WWE"});
 //Servicio.guardarDatos(l16);
 
-const em5 = new Empresa(5, "NXT", "Estados Unidos", []);
-//Servicio.guardarDatos(em5);
-//---------------------------------------------------------------------------------------------------------
-// Menu Principal
-// Opcion 1 - Mostrar luchadores registrados
-// Opcion 2 - Mostrar empresas registraas
-// - Mostrar luchadores por empresa (AAA - NXT - CMLL - WWE)
-// - Eliminar luchador o empresa
+const em5 = new Empresa({
+    idEmpresa:5,
+    nombreEmpresa: "NXT",
+    paisEmpresa: "Estados Unidos",
+    luchadoresContratados:[]
+});
+
+console.log("------------------------Sistema de gestion----------------------------")
+/*Desde esta funcion vamos a controlar 3 funciones
+--------------------------------------------------------------
+Opcion 1 - Mostrar datos de empresas o luchadores registrados
+variando el segundo parametro entre 1 y 2
+1: Luchadores
+2: Empresas
+Ejemplo
+Servicio.peticion(motrarDatos, 1) -> Luchadores
+Servicio.peticion(motrarDatos, 2) -> Empresas
+--------------------------------------------------------------
+Opcion 2 - Mostrar luchadores que tiene contratados cada empresa
+con la funcion luchadorPorEmpresa()
+Servicio.peticion(luchadorPorEmpresa, nombreDeEmpresa)
+
+Ejemplo
+Servicio.peticion(luchadorPorEmpresa, "AAA") -> Solo imprime luchadores de AAA
+--------------------------------------------------------------
+Opcion 3 - Eliminar un registro en la lista con uso de la funcion eliminarDatos
+Servicio.eliminarDatos(Nombre de la empresa o luchador, true o false para confirmar)
+
+Ejemplo
+Servicio.eliminarDatos("WWE",true) -> Elimina a WWE y se puede verificar en el RegistroEmpresas.txt
+*/
+
+//Funciones para realizar las peticiones
+Servicio.eliminarDatos("WWE",true)
+//Servicio.peticion(luchadorPorEmpresa,"AAA")
 
 
-
-
-
-//Servicio.luchadorPorEmpresa("CMLL")
-//Servicio.eliminarDatos("WWE", true)
-//Servicio.motrarDatos(1)
-
-
-console.log("Callback----------------------------")
-Servicio.peticion(motrarDatos, 1)

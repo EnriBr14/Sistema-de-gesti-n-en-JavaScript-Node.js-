@@ -25,8 +25,16 @@ class Luchador{
 
 
     toJSON(){
-        return`ID: ${this.#idLuchador} Nombre: ${this.#nombreLuchador} - EmpresaContrato: ${this.empresaContrato} - RedesSociales: ${this.redesSociales.facebook}`
+        return {
+            idLuchador: this.#idLuchador,
+            nombreLuchador: this.#nombreLuchador,
+            empresaContrato: this.empresaContrato,
+            nacionalidad: this.#nacionalidad,
+            rivales: this.rivales,
+            redesSociales: this.redesSociales
+        };
     }
+
 
     getIdLuchador(){return this.#idLuchador;}
     setIdLuchador(idLuchador){this.#idLuchador = idLuchador;}

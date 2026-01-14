@@ -15,7 +15,13 @@ class Empresa{
     }
 
     toJSON(){
-        return `ID: ${this.#idEmpresa} - Empresa ${this.#nombreEmpresa} - Pais: ${this.#paisEmpresa} `;
+
+            return {
+                idEmpresa: this.#idEmpresa,
+                nombreEmpresa: this.#nombreEmpresa,
+                paisEmpresa: this.#paisEmpresa
+            }
+
     }
 
     //getters and setters
